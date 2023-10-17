@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const connectToDb = require('./db');
+const noteController = require('./controllers/note-controller');
 
 app.use(express.json());
 
@@ -16,12 +17,23 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, 'index.html'));
 });
 
-app.post('/pomonotes', (req, res) => {
-
+app.post('/pomonotes', noteController.createNote, (req, res) => {
+  
 });
 
 app.all('*', (req, res) => {
   res.status(404).send('The page you\'re looking for does not exist. Get back to studying!');
+});
+
+//global error handler
+app.use((err, req, res, next) => {
+  const defaultError = {
+    log: 'An unknown error has occurred',
+    status: 500,
+    message: {err: 'An error has occurred'}
+  }
+  const errorObj = Object.assign(defaultError, err);
+  console.log(errorObj.log);
 });
 
 app.listen(PORT, ()=> console.log(`Server is listening on port ${PORT}`));
