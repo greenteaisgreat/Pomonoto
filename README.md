@@ -1,4 +1,4 @@
 # Pomonoto
-A combination note-taking and pomodoro timer application
+A combination note-taking and pomodoro timer application that allows users to keep track of the notes that they've taken.
 
-![tomat](https://github.com/greenteaisgreat/Pomonoto/assets/49956464/edb79ee8-0a02-4953-bec2-2770be941ef0)
+![tomat](https://github.com/greenteaisgreat/Pomonoto/assets/49956464/b2bd86ee-43df-4ffd-8db6-fc8d7bf57401)
