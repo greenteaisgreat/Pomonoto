@@ -14,11 +14,12 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 connectToDb();
 
 app.get('/', (req, res) => {
+  console.log('The root works!');
   res.status(200).sendFile(path.resolve(__dirname, 'index.html'));
 });
 
 app.post('/pomonotes', noteController.createNote, (req, res) => {
-  
+  res.status(200).json(res.locals.newNote);
 });
 
 app.all('*', (req, res) => {
