@@ -101,6 +101,7 @@ const noteController = {};
       noteBody
     });
 
+    console.log('Successfully updated user note!');
     res.locals.updateNote = updateUserNote;
     return next();
   }
@@ -143,13 +144,34 @@ const noteController = {};
         log: 'An error occurred in noteController.deleteNote',
         status: 500,
         message: {
-          err: 'An internal server occurred while trying to delete your note'
+          err: 'An internal server occurred while trying to delete that note'
         }
       });
     }
   }
 
   noteController.deleteUserNote = async (req, res, next) => {
-    
+    try {
+      const userId = req.params.id;
+      const {title, noteBody} = req.body;
+
+      const userNote = await Note.findByIdAndDelete(userId, {
+        title,
+        noteBody
+      });
+
+      res.locals.deleteUserNote = userNote;
+      console.log('User note successfully deleted!');
+      return next();
+    }
+    catch(err) {
+      return next({
+        log: 'An error occurred in noteController.deleteUserNote',
+        status: 500,
+        message: {
+          err: 'An internal server error occurred while trying to delete your note'
+        }
+      });
+    }
   }
 module.exports = noteController;
