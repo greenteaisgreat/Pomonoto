@@ -17,8 +17,12 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, 'index.html'));
 });
 
-app.get('/pomonotes', noteController.getNote, (req, res) => {
-  res.status(200).json(res.locals.getNote);
+app.get('/pomonotes', noteController.getNotes, (req, res) => {
+  res.status(200).json(res.locals.getNotes);
+});
+
+app.get('/pomonotes/:id', noteController.getUserNote, (req, res) => {
+  res.status(200).json(res.locals.getUserNote);
 });
 
 app.post('/pomonotes', noteController.createNote, (req, res) => {
