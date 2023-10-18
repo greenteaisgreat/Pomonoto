@@ -114,4 +114,42 @@ const noteController = {};
     });
    }
   }
+
+  noteController.deleteNote = async (req, res, next) => {
+    try {
+      const {title, noteBody} = req.body;
+
+      if (Object.values(req.body).length === 0) {
+        return next({
+          log: 'No data in req.body',
+          status: 404,
+          message: {
+            err: 'That note doesn\'t exist to be deleted!'
+          }
+        });
+      }
+
+      const deleteNote = await Note.deleteMany({
+        title,
+        noteBody
+      });
+
+      res.locals.deleteNote = deleteNote;
+      console.log('Note deleted!');
+      return next();
+    }
+    catch(err) {
+      return next({
+        log: 'An error occurred in noteController.deleteNote',
+        status: 500,
+        message: {
+          err: 'An internal server occurred while trying to delete your note'
+        }
+      });
+    }
+  }
+
+  noteController.deleteUserNote = async (req, res, next) => {
+    
+  }
 module.exports = noteController;

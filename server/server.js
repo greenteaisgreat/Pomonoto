@@ -13,6 +13,10 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 connectToDb();
 
+app.post('/pomonotes', noteController.createNote, (req, res) => {
+  res.status(200).json(res.locals.newNote);
+});
+
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, 'index.html'));
 });
@@ -25,12 +29,16 @@ app.get('/pomonotes/:id', noteController.getUserNote, (req, res) => {
   res.status(200).json(res.locals.getUserNote);
 });
 
-app.post('/pomonotes', noteController.createNote, (req, res) => {
-  res.status(200).json(res.locals.newNote);
-});
-
 app.put('/pomonotes/:id', noteController.updateNote, (req, res) => {
   res.status(200).json(res.locals.updateNote);
+});
+
+app.delete('/pomonotes', noteController.deleteNote, (req, res) => {
+  res.status(200).json(res.locals.deleteNote);
+});
+
+app.delete('/pomonotes/:id', noteController.deleteUserNote, (req, res) => {
+  res.status(200).json(res.locals.deleteUserNote);
 });
 
 app.all('*', (req, res) => {
