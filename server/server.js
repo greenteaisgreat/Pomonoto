@@ -25,20 +25,16 @@ app.get('/pomonotes', noteController.getNotes, (req, res) => {
   res.status(200).json(res.locals.getNotes);
 });
 
-app.get('/pomonotes/:id', noteController.getUserNote, (req, res) => {
-  res.status(200).json(res.locals.getUserNote);
+app.get('/pomonotes/:id', noteController.getNoteById, (req, res) => {
+  res.status(200).json(res.locals.getNoteById);
 });
 
 app.put('/pomonotes/:id', noteController.updateNote, (req, res) => {
   res.status(200).json(res.locals.updateNote);
 });
 
-app.delete('/pomonotes', noteController.deleteNote, (req, res) => {
+app.delete('/pomonotes/:id', noteController.deleteNote, (req, res) => {
   res.status(200).json(res.locals.deleteNote);
-});
-
-app.delete('/pomonotes/:id', noteController.deleteUserNote, (req, res) => {
-  res.status(200).json(res.locals.deleteUserNote);
 });
 
 app.all('*', (req, res) => {

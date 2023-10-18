@@ -61,18 +61,18 @@ const noteController = {};
      }
     }
 
-  noteController.getUserNote = async (req, res, next) => {
+  noteController.getNoteById = async (req, res, next) => {
     try {
-    const userId = req.params.id;
-    const userNote = await Note.findById(userId);
+    const noteId = req.params.id;
+    const userNote = await Note.findById(noteId);
 
-    res.locals.getUserNote = userNote;
+    res.locals.getNoteById = userNote;
     console.log('Successfully retrieved user note!');
     return next();
   }
   catch(err) {
     return next({
-      log: 'Error in noteController.getUserNote',
+      log: 'Error in noteController.getNoteById',
       status: 500,
       message: {
         err: 'A server error occurred while retrieving your note'
@@ -83,17 +83,17 @@ const noteController = {};
 
   noteController.updateNote = async (req, res, next) => {
     try {
-    const userId = req.params.id;
+    const noteId = req.params.id;
     const {title, noteBody} = req.body;
     
     //this finds the note and updates, but does not return the update
-    await Note.findByIdAndUpdate(userId, {
+    await Note.findByIdAndUpdate(noteId, {
       title,
       noteBody
     });
 
     //returns the updated note
-    const updateNote = await Note.findById(userId);
+    const updateNote = await Note.findById(noteId);
 
     console.log('Successfully updated user note!');
     res.locals.updateNote = updateNote;
@@ -112,25 +112,16 @@ const noteController = {};
 
   noteController.deleteNote = async (req, res, next) => {
     try {
+      const noteId = req.params.id;
       const {title, noteBody} = req.body;
 
-      if (Object.values(req.body).length === 0) {
-        return next({
-          log: 'No data in req.body',
-          status: 404,
-          message: {
-            err: 'That note doesn\'t exist to be deleted!'
-          }
-        });
-      }
-
-      const deleteNote = await Note.deleteMany({
+      const userNote = await Note.findByIdAndDelete(noteId, {
         title,
         noteBody
       });
 
-      res.locals.deleteNote = deleteNote;
-      console.log('Note deleted!');
+      res.locals.deleteNote = {success: 'Note deleted!'};
+      console.log('User note successfully deleted!');
       return next();
     }
     catch(err) {
@@ -138,34 +129,10 @@ const noteController = {};
         log: 'An error occurred in noteController.deleteNote',
         status: 500,
         message: {
-          err: 'An internal server occurred while trying to delete that note'
-        }
-      });
-    }
-  }
-
-  noteController.deleteUserNote = async (req, res, next) => {
-    try {
-      const userId = req.params.id;
-      const {title, noteBody} = req.body;
-
-      const userNote = await Note.findByIdAndDelete(userId, {
-        title,
-        noteBody
-      });
-
-      res.locals.deleteUserNote = userNote;
-      console.log('User note successfully deleted!');
-      return next();
-    }
-    catch(err) {
-      return next({
-        log: 'An error occurred in noteController.deleteUserNote',
-        status: 500,
-        message: {
           err: 'An internal server error occurred while trying to delete your note'
         }
       });
     }
   }
+
 module.exports = noteController;
