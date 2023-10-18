@@ -13,6 +13,8 @@ module.exports = {
     assetModuleFilename: '[name][ext]',
   },
 
+  mode: 'development',
+
   // proxy: {
   //   '/'
   // }
@@ -30,8 +32,6 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
   },
-
-  mode: 'development',
 
   module: {
     rules: [
