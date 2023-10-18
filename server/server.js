@@ -8,9 +8,11 @@ const cors = require('cors');
 const connectToDb = require('./db');
 const noteController = require('./controllers/note-controller');
 
+//parses all incoming json requests
 app.use(express.json());
+//serves all static files
 app.use(express.static(path.resolve(__dirname, '../dist')));
-//enables cross-resource sharing for all routes
+//enables cross-resource sharing for all routes (would usually target a specific domain irl, rather than all)
 app.use(cors());
 
 connectToDb();
