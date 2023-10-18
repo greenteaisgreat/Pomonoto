@@ -1,24 +1,26 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const express = require('express');
-const path = require('path');
-const app = express();
 const PORT = process.env.PORT || 3000;
+const express = require('express');
+const app = express();
+const path = require('path');
+const cors = require('cors');
 const connectToDb = require('./db');
 const noteController = require('./controllers/note-controller');
 
 app.use(express.json());
-
 app.use(express.static(path.resolve(__dirname, '../dist')));
+//enables cross-resource sharing for all routes
+app.use(cors());
 
 connectToDb();
 
-app.post('/pomonotes', noteController.createNote, (req, res) => {
-  res.status(200).json(res.locals.newNote);
-});
-
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, 'index.html'));
+});
+
+app.post('/pomonotes', noteController.createNote, (req, res) => {
+  res.status(200).json(res.locals.newNote);
 });
 
 app.get('/pomonotes', noteController.getNotes, (req, res) => {
