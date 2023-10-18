@@ -66,16 +66,6 @@ const noteController = {};
     const userId = req.params.id;
     const userNote = await Note.findById(userId);
 
-    if (!userNote) {
-      return next({
-        log: 'No such user exists in the database',
-        status: 404,
-        message: {
-          err: 'The user you provided doesn\'t exist!'
-        }
-      });
-    }
-
     res.locals.getUserNote = userNote;
     console.log('Successfully retrieved user note!');
     return next();
@@ -95,14 +85,18 @@ const noteController = {};
     try {
     const userId = req.params.id;
     const {title, noteBody} = req.body;
-
-    const updateUserNote = await Note.findByIdAndUpdate(userId, {
+    
+    //this finds the note and updates, but does not return the update
+    await Note.findByIdAndUpdate(userId, {
       title,
       noteBody
     });
 
+    //returns the updated note
+    const updateNote = await Note.findById(userId);
+
     console.log('Successfully updated user note!');
-    res.locals.updateNote = updateUserNote;
+    res.locals.updateNote = updateNote;
     return next();
   }
   catch(err) {
