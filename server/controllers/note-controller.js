@@ -15,7 +15,6 @@ const noteController = {};
         }
       });
     }
-
     try{
       const note = await Note.create({
         title,
@@ -23,6 +22,7 @@ const noteController = {};
       });
       //send the entire note to the server
       res.locals.newNote = note;
+      console.log('Note successfully created!');
       return next();
     } 
     catch(err) {
@@ -86,6 +86,40 @@ const noteController = {};
       status: 500,
       message: {
         err: 'A server error occurred while retrieving your note'
+      }
+    });
+   }
+  }
+
+  noteController.updateNote = async (req, res, next) => {
+    try {
+    const userId = req.params.id;
+    const {title, noteBody} = req.body;
+
+    const updateUserNote = await Note.findByIdAndUpdate(userId, {
+      title,
+      noteBody
+    });
+
+    if (!updateUserNote) {
+      return next({
+        log: 'The user doesn\'t exist in the database to update the note',
+        status: 404,
+        message: {
+          err: 'The specified user doesn\'t exist for the note you wish to update!'
+        }
+      });
+    }
+
+    res.locals.updateNote = updateUserNote;
+    return next();
+  }
+  catch(err) {
+    return next({
+      log: 'An error occurred in noteController.updateNote',
+      status: 500,
+      message: {
+        err: 'An internal server error occurred while updating your note'
       }
     });
    }

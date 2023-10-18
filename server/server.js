@@ -29,6 +29,10 @@ app.post('/pomonotes', noteController.createNote, (req, res) => {
   res.status(200).json(res.locals.newNote);
 });
 
+app.put('/pomonotes/:id', noteController.updateNote, (req, res) => {
+  res.status(200).json(res.locals.updateNote);
+});
+
 app.all('*', (req, res) => {
   res.status(404).send('The page you\'re looking for does not exist. Get back to studying!');
 });
