@@ -101,16 +101,6 @@ const noteController = {};
       noteBody
     });
 
-    if (!updateUserNote) {
-      return next({
-        log: 'The user doesn\'t exist in the database to update the note',
-        status: 404,
-        message: {
-          err: 'The specified user doesn\'t exist for the note you wish to update!'
-        }
-      });
-    }
-
     res.locals.updateNote = updateUserNote;
     return next();
   }
@@ -119,7 +109,7 @@ const noteController = {};
       log: 'An error occurred in noteController.updateNote',
       status: 500,
       message: {
-        err: 'An internal server error occurred while updating your note'
+        err: 'An internal server error occurred while updating your note. You didn\'t change your username in the URL, did you?'
       }
     });
    }
