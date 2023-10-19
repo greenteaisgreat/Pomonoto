@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before, ::after {
+  box-sizing: inherit;
+}
+
+body {
+  
+}
+
+.pomonotes-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.noto-btn:hover {
+  font-weight: bold;
+  background-color: tomato;
+  border-radius: 5px;
+  box-shadow: 2px 2px;
+}
+
+.form-container {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.del-btn:hover {
+  background-color: tomato;
+  border-radius: 5px;
+  box-shadow: 2px 2px;
+  font-weight: bold;
+}
+
+.newNote {
+ border: 2px solid black;
+ width: 350px;
+ height: 120px;
+ margin: 10px 10px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
