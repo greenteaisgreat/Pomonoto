@@ -1,7 +1,11 @@
+import { useState } from "react";
 
 const App = () => {
-  render(
-      <div>Hello World!</div>
+  const [notes, setNotes] = useState();
+  
+
+  return (
+    <div>Hello World!</div>
   )
 };
 
