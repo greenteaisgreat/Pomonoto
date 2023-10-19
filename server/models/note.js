@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const noteModel = new mongoose.Schema({
   title: String,
-  noteBody: {type: String, required: true},
+  noteBody: String,
 });
 
 const NewNote = mongoose.model('Note', noteModel);

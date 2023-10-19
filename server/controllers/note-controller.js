@@ -6,15 +6,6 @@ const noteController = {};
     //retrieve the user's optional title and note
     const {title, noteBody} = req.body;
 
-    if (!noteBody) {
-      return next({
-        log: 'No note body provided in the request',
-        status: 400,
-        message: {
-          err: 'You must provide at least one character within the body of the note!'
-        }
-      });
-    }
     try{
       const note = await Note.create({
         title,
@@ -39,13 +30,7 @@ const noteController = {};
   noteController.getNotes = async (req, res, next) => {
     try {
       const note = await Note.find();
-      if (note.length === 0) {
-        return next({
-          log: 'No notes within the database',
-          status: 404,
-          message: 'No notes have been taken yet!'
-        });
-      } 
+
       console.log('Notes retrieved!');
       res.locals.getNotes = note;
       return next();
