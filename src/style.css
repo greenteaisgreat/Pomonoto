@@ -9,7 +9,18 @@
 }
 
 body {
-  
+  background-image: url('https://user-images.githubusercontent.com/49956464/276316685-a92784f9-21ad-47b5-832b-22f178151cce.png');
+  background-repeat: no-repeat;
+  background-position-x: 95%;
+  background-position-y: 85%;
+  background-size: 300px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.App {
+  position: relative;
 }
 
 .pomonotes-header {
@@ -27,10 +38,9 @@ body {
 }
 
 .form-container {
-  margin-top: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 
 .create-btn-container {
