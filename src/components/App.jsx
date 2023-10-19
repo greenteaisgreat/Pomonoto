@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
-  const [notes, setNotes] = useState();
   
+  useEffect(()=> {
+    fetch('http://localhost:3000/pomonotes')
+    .then((res)=> res.json())
+    .then((data)=> console.log(data))
+  })
+
+  const [notes, setNotes] = useState('Loading notes...');
+
 
   return (
     <div>Hello World!</div>
