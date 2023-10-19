@@ -40,40 +40,51 @@ const App = () => {
     e.preventDefault();
 
     const response = await axios.post('http://localhost:3000/pomonotes', createForm);
-    console.log('create note res', response);
+    console.log('create note res', response.data);
 
-    //destructures the array so as to not change the original array; immutability
+    //destructures the array so as to not change the original notes array; immutability
     setNotes([...notes, response.data]);
-
+    //resets the form areas after the user submits a note
     setForm({title: '', noteBody: ''});
+  }
+
+  const deletePomonote = async (_id) => {
+    const response = await axios.delete(`http://localhost:3000/pomonotes/${_id}`);
+    const refreshNotes = [...notes].filter(note => note._id !== _id);
+    setNotes(refreshNotes);
   }
   
   //iterates through the AJAX array and populates the data with its 
   //unique '_id', inherent from the database response
   return (
-    <div className="Pomonotes">
-      <h2>🍅Pomonotes:</h2>
+    <div className="App">
+      <h1 className="pomonotes-header">🍅 Pomonoto!</h1>
       {notes && notes.map(note => {
         return(
           //whenever looping through values in React, each item must have a unique key (note._id)
-          <div key={note._id}>
+          <div key={note._id} className="newNote">
             <h3>{note.title}</h3>
+            <p>{note.noteBody}</p>
+            <button className="del-btn"style={{marginTop:"40px"}}onClick={() => deletePomonote(note._id)}>Delete Noto</button>
           </div>
         )
       })}
 
-      <div>
-        <h2>Create a Pomonote!</h2>
-        <form onSubmit={createPomonote}>
+      <div className="form-container">
+        <form>
           <label>
-            Give your note an optional title:
-            <input value={createForm.title} onChange={updateForm} name="title" />
+            <input placeholder="Enter a title! 🍅" value={createForm.title} onChange={updateForm} name="title" />
           </label>
+          <br />
+          <br />
           <label>
-            Write your note:
-            <textarea value={createForm.noteBody} onChange={updateForm} name="noteBody" />
+            <textarea placeholder="Enter your note! 🍅" className="note-body" value={createForm.noteBody} onChange={updateForm} name="noteBody" />
           </label>
-          <button type="submit">Create noto!<br />🍅</button>
+          <br />
+          <br />
+          <div className="create-btn-container">
+          <button onClick={createPomonote} type="submit" className="noto-btn">Create noto!<br />🍅</button>
+          </div>
         </form>
       </div>
     </div>
